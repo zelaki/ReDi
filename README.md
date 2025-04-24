@@ -63,7 +63,7 @@ conda activate ReDi
 Weights for our pre-trained SiT model can be downloaded as follows:
 ```bash
 mkdir pretrained_models
-wget "https://www.dropbox.com/scl/fi/yi726j26yc57s4qhzgbtt/3000000.pt?rlkey=tcr8e0n9rrm12wfen44dkz00r&e=1&st=59cyam58&dl=1" -O pretrained_models/SiT-ReDi-XL/2-3M.pt
+wget "https://www.dropbox.com/scl/fi/yi726j26yc57s4qhzgbtt/3000000.pt?rlkey=tcr8e0n9rrm12wfen44dkz00r&e=1&st=59cyam58&dl=1" -O pretrained_models/SiT-ReDi-XL-2-3M.pt
 ```
 
 
