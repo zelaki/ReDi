@@ -9,7 +9,8 @@
 </style> -->
 
 <h1 align="center">
-   Boosting Generative Image Modeling via Joint
+   Boosting Generative Image Modeling via  
+  <br> Joint
 Image-Feature Synthesis
 </h1>
 
@@ -19,12 +20,13 @@ Image-Feature Synthesis
 <div align="center">
   <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Theodoros&nbsp;Kouzelis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
     <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Efstathios &nbspKarypidis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
-  <a href="https://scholar.google.com/citations?user=B_dKcz4AAAAJ&hl=el" target="_blank">Ioannis&nbsp;Kakogeorgiou</a><sup>1</sup> &ensp; <b>&middot;</b> &ensp;
+  <a href="https://scholar.google.com/citations?user=B_dKcz4AAAAJ&hl=el" target="_blank">Ioannis&nbsp;Kakogeorgiou</a><sup>1,6</sup> &ensp; <b>&middot;</b> &ensp;
+    <br>
   <a href="https://scholar.google.fr/citations?user=7atfg7EAAAAJ&hl=en" target="_blank">Spyros&nbsp;Gidaris</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
   <a href="https://scholar.google.com/citations?user=xCPoT4EAAAAJ&hl=en" target="_blank">Nikos&nbsp;Komodakis</a><sup>1,4,5</sup>  
   <br>
   <sup>1</sup> Archimedes/Athena RC &emsp; <sup>2</sup> valeo.ai &emsp; <sup>3</sup> National Technical University of Athens &emsp; <br>
-  <sup>4</sup> University of Crete &emsp; <sup>5</sup> IACM-Forth &emsp; <br>
+  <sup>4</sup> University of Crete &emsp; <sup>5</sup> IACM-Forth &emsp; <sup>6</sup>  IIT, NCSR "Demokritos" &emsp;   <br>
 
 <!-- <p></p>
 <a href="https://eq-vae.github.io/"><img 
