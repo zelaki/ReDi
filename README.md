@@ -44,4 +44,43 @@ src="https://img.shields.io/badge/-Paper-blue.svg?colorA=333&logo=arxiv" height=
 
 <br>
 
-### Our code will be uploaded soon!
+## Setup
+
+Download and set up the repo:
+
+```bash
+git clone https://github.com/zelaki/ReDi.git
+cd ReDi
+```
+
+We provide an [`environment.yml`](environment.yml) file that can be used to create a Conda environment. 
+
+```bash
+conda env create -f environment.yml
+conda activate ReDi
+```
+
+Weights for our pre-trained SiT model can be downloaded as follows:
+```bash
+mkdir pretrained_models
+wget "https://www.dropbox.com/scl/fi/yi726j26yc57s4qhzgbtt/3000000.pt?rlkey=tcr8e0n9rrm12wfen44dkz00r&e=1&st=59cyam58&dl=1" -O pretrained_models/SiT-ReDi-XL/2-3M.pt
+```
+
+
+## Sampling
+![More SiT samples](media/samples.png)
+
+You can sample from our pre-trained ReDi models with [`sample.py`](sample.py).
+```bash
+python sample.py SDE --image-size 256 --seed 42 --ckpt /path/to/ckpt
+```
+
+### Sample and Evaluate
+First download the [ImageNet reference batch from ADM](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/ref_batches/imagenet/256/VIRTUAL_imagenet256_labeled.npz)
+
+You can use sample_ddp.py script to samples a large number of images in parallel. This script generates a folder of samples as well as a .npz and directly uses with ADM's TensorFlow evaluation suite to compute FID, Inception Score and other metrics. For example, to sample 50K images from our pre-trained ReDi model over N run:
+```bash
+torchrun --nnodes=1 --nproc_per_node=N sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000 --pca-rank 8 --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
+```
+
+
