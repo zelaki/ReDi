@@ -80,7 +80,7 @@ First download the [ImageNet reference batch from ADM](https://openaipublic.blob
 
 You can use sample_ddp.py script to samples a large number of images in parallel. This script generates a folder of samples as well as a .npz and directly uses with ADM's TensorFlow evaluation suite to compute FID, Inception Score and other metrics. For example, to sample 50K images from our pre-trained ReDi model over N run:
 ```bash
-torchrun --nnodes=1 --nproc_per_node=N sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000 --pca-rank 8 --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
+torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000  --pca-rank 8 --ckpt pretrained_models/SiT-ReDi-XL-2-3M.pt --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
 ```
 
 
