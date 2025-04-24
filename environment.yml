@@ -1,0 +1,18 @@
+name: ReDi
+channels:
+  - pytorch
+  - nvidia
+dependencies:
+  - python >= 3.8
+  - pytorch >= 1.13
+  - torchvision
+  - tensorflow
+  - scikit-learn
+  - pytorch-cuda >=11.7
+  - pip
+  - pip:
+    - timm
+    - diffusers
+    - accelerate
+    - torchdiffeq
+    - wandb
