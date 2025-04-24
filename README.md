@@ -19,7 +19,7 @@ Image-Feature Synthesis
 
 <div align="center">
   <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Theodoros&nbsp;Kouzelis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
-    <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Efstathios &nbspKarypidis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
+    <a href="https://scholar.google.com/citations?user=jif2JYsAAAAJ&hl=en" target="_blank">Efstathios &nbspKarypidis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
   <a href="https://scholar.google.com/citations?user=B_dKcz4AAAAJ&hl=el" target="_blank">Ioannis&nbsp;Kakogeorgiou</a><sup>1,6</sup> &ensp; <b>&middot;</b> &ensp;
     <br>
   <a href="https://scholar.google.fr/citations?user=7atfg7EAAAAJ&hl=en" target="_blank">Spyros&nbsp;Gidaris</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
