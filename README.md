@@ -84,3 +84,9 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
 ```
 
 
+## Training
+
+#### We will upload a training script for SiT w/ ReDi soon ⏳
+
+
+
