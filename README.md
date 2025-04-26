@@ -89,4 +89,15 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
 #### We will upload a training script for SiT w/ ReDi soon ⏳
 
 
+## Citation
+
+```bibtex
+article{kouzelis2025boosting,
+  title={Boosting Generative Image Modeling via Joint Image-Feature Synthesis},
+  author={Kouzelis, Theodoros and Karypidis, Efstathios and Kakogeorgiou, Ioannis and Gidaris, Spyros and Komodakis, Nikos},
+  journal={arXiv preprint arXiv:2504.16064},
+  year={2025}
+}
+```
+
 
