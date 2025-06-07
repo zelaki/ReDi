@@ -125,6 +125,11 @@ Then this script will automatically create the folder in `results` to save logs 
 - `--dino-drop-prob`: Set to 0.2 if you plan to use Representation Guidance during inference 
 
 
+## Acknowledgement
+
+This code is mainly built upon [REPA](https://github.com/sihyun-yu/REPA), [SiT](https://github.com/willisma/SiT) and [fastDiT](https://github.com/chuanyangjin/fast-DiT) repositories.
+
+
 
 ## Citation
 
