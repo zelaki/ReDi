@@ -96,12 +96,11 @@ def main(mode, args):
         learn_sigma = False
 
     # Load model:
-    learn_sigma=True
     latent_size = args.image_size // 8
     model = SiT_models[args.model](
         input_size=latent_size,
         num_classes=args.num_classes,
-        learn_sigma=learn_sigma,
+        learn_sigma=False,
         in_channels=4+args.pca_rank
     ).to(device)
     # Auto-download a pre-trained model or load a custom SiT checkpoint from train.py:

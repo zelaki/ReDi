@@ -286,32 +286,14 @@ class SiT(nn.Module):
         cond_eps, uncond_eps = torch.split(eps, len(eps) // 2, dim=0)
         t_cur = t[0].item()
 
-        # if  (t_cur <= guidance_high) and (t_cur >= guidance_low):
-            
-        #     half_eps = uncond_eps + cfg_scale * (cond_eps - uncond_eps)
-        # else:
-        #     half_eps = cond_eps
+
         half_eps = uncond_eps + cfg_scale * (cond_eps - uncond_eps)
 
 
         eps = torch.cat([half_eps, half_eps], dim=0)
         return torch.cat([eps, rest], dim=1)
 
-    def forward_with_decoupled(self, x, t, y, cfg_scale, inner_scale):
 
-        half = x[: len(x) // 3]
-        half_zero = half.clone()
-        half_zero[:,4:,:,:] = 0
-        combined = torch.cat([half, half, half_zero], dim=0)
-        model_out = self.forward(combined, t, y)
-        eps, rest = model_out[:, :self.in_channels], model_out[:, self.in_channels:]
-        cond_eps, uncond_class, uncond_dino = torch.split(eps, len(eps) // 3, dim=0)
-
-        half_eps[:,:4] = uncond_class + cfg_scale * (cond_eps - uncond_class)
-        half_eps[:,4:] = uncond_dino + inner_scale * (cond_eps - uncond_dino)
-
-        eps = torch.cat([half_eps, half_eps, half_eps], dim=0)
-        return torch.cat([eps, rest], dim=1)
 
 
 

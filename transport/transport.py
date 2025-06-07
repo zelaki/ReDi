@@ -151,7 +151,6 @@ class Transport:
             loss_dino = mean_flat(((model_output_dino - ut[:,4:,:,:]) ** 2))
 
             terms['loss'] = loss_vae + lam * loss_dino
-            # terms['loss'] = mean_flat(((model_output - ut) ** 2))
         else: 
             _, drift_var = self.path_sampler.compute_drift(xt, t)
             sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, xt))
