@@ -17,6 +17,8 @@ Image-Feature Synthesis
 
 
 
+
+
 <div align="center">
   <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Theodoros&nbsp;Kouzelis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
     <a href="https://scholar.google.com/citations?user=jif2JYsAAAAJ&hl=en" target="_blank">Efstathios &nbspKarypidis</a><sup>1,3</sup> &ensp; <b>&middot;</b> &ensp;
@@ -43,6 +45,11 @@ src="https://img.shields.io/badge/-Paper-blue.svg?colorA=333&logo=arxiv" height=
 
 
 <br>
+
+
+## 🔥 News
+
+- \[2025/6/7\] **Training code for SiT w/ ReDi released!** 🎉 
 
 ## Setup
 
@@ -95,6 +102,7 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
   ```bash
   torchrun --nnodes=1 --nproc_per_node=1 calc_pca.py --feature-path "/path/to/your/local/features_dir"
   ```
+  By default we use 200 batches with batch-size 256 for PCA.  
 
 
 ## Training
