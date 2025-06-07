@@ -88,6 +88,14 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
 
  First [download ImageNet](https://www.kaggle.com/competitions/imagenet-object-localization-challenge/data) and follow the  [preprocessing guide](https://github.com/sihyun-yu/REPA/tree/main/preprocessing) from REPA repository.
 
+  #### DINOv2 PCA model
+  We provide a pre-computed full rank [PCA model](/data2/ReDi/pcs/dino_pca_model.pth). You can adjust the number of PCs during training. 
+  If you want to re-compute the PCA model you can use the following script:
+
+  ```bash
+  torchrun --nnodes=1 --nproc_per_node=1 calc_pca.py --feature-path "/path/to/your/local/features_dir"
+  ```
+
 
 ## Training
 
