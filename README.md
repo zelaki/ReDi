@@ -102,7 +102,7 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
   ```bash
   torchrun --nnodes=1 --nproc_per_node=1 calc_pca.py --feature-path "/path/to/your/local/features_dir"
   ```
-  By default we use 200 batches with batch-size 256 for PCA.  
+  By default we use 300 batches with batch-size 256 for PCA.  
 
 
 ## Training

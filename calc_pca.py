@@ -189,7 +189,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--feature-path", type=str, default="features")
     parser.add_argument("--image-size", type=int, choices=[256, 512], default=256)
-    parser.add_argument("--num-batches", type=int, default=200)
+    parser.add_argument("--num-batches", type=int, default=300)
     parser.add_argument("--whiten", type=bool, default=False)
     parser.add_argument("--global-batch-size", type=int, default=256)
     parser.add_argument("--global-seed", type=int, default=0)
