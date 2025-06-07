@@ -84,9 +84,30 @@ torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --m
 ```
 
 
+## Data Preprocessing
+
+ First [download ImageNet](https://www.kaggle.com/competitions/imagenet-object-localization-challenge/data) and follow the  [preprocessing guide](https://github.com/sihyun-yu/REPA/tree/main/preprocessing) from REPA repository.
+
+
 ## Training
 
-#### We will upload a training script for SiT w/ ReDi soon ⏳
+To train ReDi w/ SiT use the following script:
+
+```bash
+torchrun --nnodes 1 --nproc_per_node 8 train_redi.py \
+  --model "SiT-XL/2" \
+  --feature-path "/path/to/your/local/features_dir" \
+  --pca-rank 8 \                                         
+  --pca-model-path ./pcs/dino_pca_model.pth
+```
+
+Then this script will automatically create the folder in `results` to save logs and checkpoints. You can adjust the following options:
+
+- `--models`: `[SiT-B/2, SiT-L/2, SiT-XL/2]`
+- `--pca-rank`: Number of DINOv2 PC to use for joint training
+- `--pca-model-path`: Path to precomputed PCA model
+- `--dino-drop-prob`: Set to 0.2 if you plan to use Representation Guidance during inference 
+
 
 
 ## Citation
