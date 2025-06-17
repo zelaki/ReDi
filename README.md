@@ -30,12 +30,11 @@ Image-Feature Synthesis
   <sup>1</sup> Archimedes/Athena RC &emsp; <sup>2</sup> valeo.ai &emsp; <sup>3</sup> National Technical University of Athens &emsp; <br>
   <sup>4</sup> University of Crete &emsp; <sup>5</sup> IACM-Forth &emsp; <sup>6</sup>  IIT, NCSR "Demokritos" &emsp;   <br>
 
-<!-- <p></p>
-<a href="https://eq-vae.github.io/"><img 
-src="https://img.shields.io/badge/-Webpage-blue.svg?colorA=333&logo=html5" height=25em></a>
-<a href="https://arxiv.org/abs/2502.09509"><img 
-src="https://img.shields.io/badge/-Paper-blue.svg?colorA=333&logo=arxiv" height=25em></a>
-<p></p> -->
+<p align="center">
+  <a href="https://representationdiffusion.github.io/">🌐 Project Page</a> &ensp;
+  <a href="https://arxiv.org/abs/2504.16064">📃 Paper</a> &ensp;
+  <br><br>
+</p>
 
 ![teaser.png](media/teaser.png)
 
