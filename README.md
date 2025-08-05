@@ -66,7 +66,7 @@ conda env create -f environment.yml
 conda activate ReDi
 ```
 
-Weights for our SiT-XL/2 w/ ReDi model trained for 600  can be downloaded from [Hugging Face](https://huggingface.co/zelaki/SiT-ReDi-XL-2) 🤗:
+Weights for our SiT-XL/2 w/ ReDi model trained for 600 epochs on ImageNet256x256  can be downloaded from [Hugging Face](https://huggingface.co/zelaki/SiT-ReDi-XL-2) 🤗:
 
 | **Model**           | **Epochs** | **FID** | **SFID** | **IS** | **Pre** | **Rec** |
 |---------------------|---------|---------|----------|--------|----------|---------|
@@ -85,24 +85,24 @@ python sample.py SDE --image-size 256 --seed 42 --ckpt /path/to/ckpt
 ### Sample and Evaluate
 First download the [ImageNet reference batch from ADM](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/ref_batches/imagenet/256/VIRTUAL_imagenet256_labeled.npz)
 
-You can use sample_ddp.py script to samples a large number of images in parallel. This script generates a folder of samples as well as a .npz and directly uses with ADM's TensorFlow evaluation suite to compute FID, Inception Score and other metrics. For example, to sample 50K images from our pre-trained ReDi model over N run:
+You can use sample_ddp.py script to sample a large number of images in parallel. This script generates a folder of samples as well as a .npz and directly uses with ADM's TensorFlow evaluation suite to compute FID, Inception Score and other metrics. For example, to sample 50K images from our pre-trained ReDi model over N GPUs, run:
 ```bash
-torchrun --nnodes=1 --nproc_per_node=8 --master-port 1312  sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000  --pca-rank 8 --ckpt pretrained_models/SiT-ReDi-XL-2-3M.pt --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
+torchrun --nnodes=1 --nproc_per_node=N --master-port 1312  sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000  --pca-rank 8 --ckpt pretrained_models/SiT-ReDi-XL-2.pt --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
 ```
 
 
 ## Data Preprocessing
 
- First [download ImageNet](https://www.kaggle.com/competitions/imagenet-object-localization-challenge/data) and follow the  [preprocessing guide](https://github.com/sihyun-yu/REPA/tree/main/preprocessing) from REPA repository.
+ First, [download ImageNet](https://www.kaggle.com/competitions/imagenet-object-localization-challenge/data) and follow the  [preprocessing guide](https://github.com/sihyun-yu/REPA/tree/main/preprocessing) from REPA repository.
 
   #### DINOv2 PCA model
   We provide a pre-computed full rank [PCA model](/data2/ReDi/pcs/dino_pca_model.pth). You can adjust the number of PCs during training. 
-  If you want to re-compute the PCA model you can use the following script:
+  If you want to re-compute the PCA mode,l you can use the following script:
 
   ```bash
   torchrun --nnodes=1 --nproc_per_node=1 calc_pca.py --feature-path "/path/to/your/local/features_dir"
   ```
-  By default we use 300 batches with batch-size 256 for PCA.  
+  By default, we use 300 batches with batch-size 256 for PCA.  
 
 
 ## Training
