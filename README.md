@@ -50,7 +50,7 @@ Image-Feature Synthesis
 
 - \[2025/6/7\] **Training code for SiT w/ ReDi released!** 🎉 
 
-- \[2025/9/1\] **Training code for REPA loss on top of ReDi released!** 🎉 
+- \[2025/9/3\] **Training code for REPA loss on top of ReDi released!** 🎉 
 
 
 ## Setup
