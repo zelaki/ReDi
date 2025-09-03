@@ -50,6 +50,9 @@ Image-Feature Synthesis
 
 - \[2025/6/7\] **Training code for SiT w/ ReDi released!** 🎉 
 
+- \[2025/9/1\] **Training code for REPA loss on top of ReDi released!** 🎉 
+
+
 ## Setup
 
 Download and set up the repo:
@@ -124,6 +127,11 @@ Then this script will automatically create the folder in `results` to save logs 
 - `--pca-model-path`: Path to precomputed PCA model
 - `--dino-drop-prob`: Set to 0.2 if you plan to use Representation Guidance during inference 
 
+### Add REPA loss
+To enable REPA loss on top of ReDi use the following arguments:
+- `--repa-loss` True
+- `--repa-layer`: Layer to apply REPA projection.
+- `--repa-weight`: Weight of REPA loss.
 
 ## Acknowledgement
 

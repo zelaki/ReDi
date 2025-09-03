@@ -101,6 +101,8 @@ def main(mode, args):
         input_size=latent_size,
         num_classes=args.num_classes,
         learn_sigma=False,
+        repa_loss=args.repa_loss,
+        repa_layer=args.repa_layer,
         in_channels=4+args.pca_rank
     ).to(device)
     # Auto-download a pre-trained model or load a custom SiT checkpoint from train.py:
@@ -272,6 +274,8 @@ if __name__ == "__main__":
     parser.add_argument("--image-size", type=int, choices=[256, 512], default=256)
     parser.add_argument("--num-classes", type=int, default=1000)
     parser.add_argument("--pca-rank", type=int, default=8)
+    parser.add_argument("--repa-loss", type=bool, default=False)
+    parser.add_argument("--repa-layer", type=float, default=8)
     parser.add_argument("--cfg-scale",  type=float, default=1.0)
     parser.add_argument("--cfg-vae",  type=bool, default=False)
     parser.add_argument("--ref-batch", type=str, default="./VIRTUAL_imagenet256_labeled.npz")

@@ -13,6 +13,17 @@ import math
 from timm.models.vision_transformer import PatchEmbed, Attention, Mlp
 
 
+def build_mlp(hidden_size, projector_dim, z_dim):
+    return nn.Sequential(
+                nn.Linear(hidden_size, projector_dim),
+                nn.SiLU(),
+                nn.Linear(projector_dim, projector_dim),
+                nn.SiLU(),
+                nn.Linear(projector_dim, z_dim),
+            )
+
+
+
 def modulate(x, shift, scale):
     return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
 
@@ -155,6 +166,9 @@ class SiT(nn.Module):
         class_dropout_prob=0.1,
         num_classes=1000,
         learn_sigma=True,
+        repa_loss=False,
+        repa_layer=8,
+
     ):
         super().__init__()
         self.learn_sigma = learn_sigma
@@ -162,7 +176,7 @@ class SiT(nn.Module):
         self.out_channels = in_channels * 2 if learn_sigma else in_channels
         self.patch_size = patch_size
         self.num_heads = num_heads
-
+        self.repa_loss = repa_loss
         self.x_embedder = PatchEmbed(input_size, patch_size, in_channels, hidden_size, bias=True)
         self.t_embedder = TimestepEmbedder(hidden_size)
         self.y_embedder = LabelEmbedder(num_classes, hidden_size, class_dropout_prob)
@@ -174,6 +188,11 @@ class SiT(nn.Module):
             SiTBlock(hidden_size, num_heads, mlp_ratio=mlp_ratio) for _ in range(depth)
         ])
         self.final_layer = FinalLayer(hidden_size, patch_size, self.out_channels)
+
+        if repa_loss:
+            self.projector = build_mlp(hidden_size, 2048, 768)
+            self.repa_layer = repa_layer
+
         self.initialize_weights()
 
     def initialize_weights(self):
@@ -243,16 +262,30 @@ class SiT(nn.Module):
         y: (N,) tensor of class labels
         """
         x = self.x_embedder(x) + self.pos_embed  # (N, T, D), where T = H * W / patch_size ** 2
+
+        N, T, D = x.shape
+
         t = self.t_embedder(t)                   # (N, D)
         y = self.y_embedder(y, self.training)    # (N, D)
         c = t + y                                # (N, D)
-        for block in self.blocks:
+        for i, block in enumerate(self.blocks):
             x = torch.utils.checkpoint.checkpoint(self.ckpt_wrapper(block), x, c)
+
+            if self.repa_loss and ((i + 1) == self.repa_layer):
+                zs = self.projector(x.reshape(-1, D)).reshape(N, T, -1)
+
+
         x = self.final_layer(x, c)                # (N, T, patch_size ** 2 * out_channels)
         x = self.unpatchify(x)                   # (N, out_channels, H, W)
         if self.learn_sigma:
             x, _ = x.chunk(2, dim=1)
-        return x
+
+        if self.training and self.repa_loss:
+
+            return x, zs
+        else:
+            return x
+
 
     def forward_with_cfg(self, x, t, y, cfg_scale):
         """

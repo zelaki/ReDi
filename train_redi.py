@@ -190,7 +190,10 @@ def main(args):
         input_size=latent_size,
         num_classes=args.num_classes,
         in_channels=4+args.pca_rank,
+        repa_loss=args.repa_loss,
+        repa_layer=args.repa_layer,
         learn_sigma=False
+
     )
 
     # Note that parameter initialization is done within the SiT constructor
@@ -295,7 +298,10 @@ def main(args):
                 raw_image_ = preprocess_raw_image(raw_image)
 
                 z = encoder.forward_features(raw_image_)['x_norm_patchtokens']
-
+                if args.repa_loss:
+                    dino_feats = z.clone()
+                else:
+                    dino_feats = None
 
                 z = (z - mean_dino) / std_dino
                 z = z - pca_mean
@@ -317,8 +323,17 @@ def main(args):
             model_kwargs = dict(y=y)
             loss_dict = transport.training_losses(
                 model, x_joint, model_kwargs,
-                dino_drop_prob=args.dino_drop_prob if args.dino_drop_prob is not None else 0)
-            loss = loss_dict["loss"].mean()
+                dino_drop_prob=args.dino_drop_prob if args.dino_drop_prob is not None else 0,
+                dino_feats=dino_feats)
+
+            if args.repa_loss:
+                loss_denoise = loss_dict["loss"].mean()
+                loss_proj = loss_dict["proj_loss"].mean()
+                loss = loss_denoise + loss_proj * args.repa_weight
+            else:
+                loss = loss_dict["loss"].mean()
+            
+            
             opt.zero_grad()
             loss.backward()
             opt.step()
@@ -379,6 +394,12 @@ if __name__ == "__main__":
     parser.add_argument("--num-classes", type=int, default=1000)
     parser.add_argument("--epochs", type=int, default=1400)
     parser.add_argument("--pca-rank", type=int, default=8)
+
+    parser.add_argument("--repa-loss", type=bool, default=False)
+    parser.add_argument("--repa-weight", type=float, default=0.5)
+    parser.add_argument("--repa-layer", type=float, default=8)
+
+
     parser.add_argument("--global-batch-size", type=int, default=256)
     parser.add_argument("--global-seed", type=int, default=0)
     parser.add_argument("--vae", type=str, choices=["ema", "mse"], default="ema")  # Choice doesn't affect training

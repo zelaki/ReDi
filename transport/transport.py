@@ -119,7 +119,8 @@ class Transport:
         x1, 
         model_kwargs=None,
         dino_drop_prob=0.0,
-        lam=1.0
+        lam=1.0,
+        dino_feats=None
     ):
         """Loss for training the score model
         Args:
@@ -136,7 +137,13 @@ class Transport:
             x1[:,4:,:,:] = 0
 
         t, xt, ut = self.path_sampler.plan(t, x0, x1)
-        model_output = model(xt, t, **model_kwargs)
+
+        if dino_feats is not None:
+            model_output, zs_tilde = model(xt, t, **model_kwargs)
+        else:
+            model_output = model(xt, t, **model_kwargs)
+
+
         B, *_, C = xt.shape
         assert model_output.size() == (B, *xt.size()[1:-1], C)
 
@@ -150,7 +157,20 @@ class Transport:
             loss_vae = mean_flat(((model_output_vae - ut[:,:4,:,:]) ** 2))
             loss_dino = mean_flat(((model_output_dino - ut[:,4:,:,:]) ** 2))
 
+
             terms['loss'] = loss_vae + lam * loss_dino
+
+            proj_loss = 0.
+            bsz = dino_feats.shape[0]
+            for j, (z_j, z_tilde_j) in enumerate(zip(dino_feats, zs_tilde)):
+                z_tilde_j = th.nn.functional.normalize(z_tilde_j, dim=-1) 
+                z_j = th.nn.functional.normalize(z_j, dim=-1) 
+                proj_loss += mean_flat(-(z_j * z_tilde_j).sum(dim=-1))
+            proj_loss /= bsz
+
+            terms['proj_loss'] = proj_loss
+
+
         else: 
             _, drift_var = self.path_sampler.compute_drift(xt, t)
             sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, xt))
