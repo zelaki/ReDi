@@ -48,9 +48,13 @@ Image-Feature Synthesis
 
 ## 🔥 News
 
+
+- \[2025/9/19\] **ReDi is accepted at NeurIPS 2025 as a Spotlight!** 🎉
+  
+- \[2025/9/3\] **Training code for REPA loss on top of ReDi released!** 🎉 
+
 - \[2025/6/7\] **Training code for SiT w/ ReDi released!** 🎉 
 
-- \[2025/9/3\] **Training code for REPA loss on top of ReDi released!** 🎉 
 
 
 ## Setup
