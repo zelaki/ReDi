@@ -11,7 +11,7 @@
 <h1 align="center">
    Boosting Generative Image Modeling via  
   <br> Joint
-Image-Feature Synthesis
+Image-Feature Synthesis <br> 🌟 NeurIPS 2025 Spotlight 🌟
 </h1>
 
 
