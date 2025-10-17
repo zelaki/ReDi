@@ -161,14 +161,16 @@ class Transport:
             terms['loss'] = loss_vae + lam * loss_dino
 
             proj_loss = 0.
-            bsz = dino_feats.shape[0]
-            for j, (z_j, z_tilde_j) in enumerate(zip(dino_feats, zs_tilde)):
-                z_tilde_j = th.nn.functional.normalize(z_tilde_j, dim=-1) 
-                z_j = th.nn.functional.normalize(z_j, dim=-1) 
-                proj_loss += mean_flat(-(z_j * z_tilde_j).sum(dim=-1))
-            proj_loss /= bsz
 
-            terms['proj_loss'] = proj_loss
+            if dino_feats is not None:
+                bsz = dino_feats.shape[0]
+                for j, (z_j, z_tilde_j) in enumerate(zip(dino_feats, zs_tilde)):
+                    z_tilde_j = th.nn.functional.normalize(z_tilde_j, dim=-1) 
+                    z_j = th.nn.functional.normalize(z_j, dim=-1) 
+                    proj_loss += mean_flat(-(z_j * z_tilde_j).sum(dim=-1))
+                proj_loss /= bsz
+
+                terms['proj_loss'] = proj_loss
 
 
         else: 
