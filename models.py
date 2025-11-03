@@ -329,6 +329,27 @@ class SiT(nn.Module):
 
 
 
+    def forward_with_rg(self, x, t, y, rg_scale):
+        """
+        Forward pass, but also batches the unconditional forward pass for representation guidance.
+        See https://arxiv.org/abs/2504.16064 Sec. 3.5 for more details.
+        """
+        # https://github.com/openai/glide-text2im/blob/main/notebooks/text2im.ipynb
+        half = x[: len(x) // 2]
+        half_zero = half.clone()
+        half_zero[:,4:,:,:] = 0
+        combined = torch.cat([half, half_zero], dim=0)
+        model_out = self.forward(combined, t, y)
+
+
+        eps, rest = model_out[:, :self.in_channels], model_out[:, self.in_channels:]
+        cond_eps, uncond_eps = torch.split(eps, len(eps) // 2, dim=0)
+
+        half_eps = uncond_eps + rg_scale * (cond_eps - uncond_eps)
+        eps = torch.cat([half_eps, half_eps], dim=0)
+        return torch.cat([eps, rest], dim=1)
+
+
 
 
 

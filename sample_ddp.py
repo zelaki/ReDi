@@ -149,7 +149,7 @@ def main(mode, args):
     vae = AutoencoderKL.from_pretrained(f"stabilityai/sd-vae-ft-{args.vae}").to(device)
     assert args.cfg_scale >= 1.0, "In almost all cases, cfg_scale be >= 1.0"
     using_cfg = args.cfg_scale > 1.0
-
+    using_rg = args.rg_scale > 1.0
     # Create folder to save samples:
     model_string_name = args.model.replace("/", "-")
     ckpt_string_name = os.path.basename(args.ckpt).replace(".pt", "") if args.ckpt else "pretrained"
@@ -223,6 +223,11 @@ def main(mode, args):
             y = torch.cat([y, y_null], 0)
             model_kwargs = dict(y=y, cfg_scale=args.cfg_scale)
             model_fn = model.forward_with_cfg
+        elif using_rg:
+            z = torch.cat([z, z], 0)
+            y = torch.cat([y, y], 0)
+            model_kwargs = dict(y=y, rg_scale=args.rg_scale)
+            model_fn = model.forward_with_rg
         else:
             model_kwargs = dict(y=y)
             model_fn = model.forward
@@ -278,6 +283,7 @@ if __name__ == "__main__":
     parser.add_argument("--repa-layer", type=float, default=8)
     parser.add_argument("--cfg-scale",  type=float, default=1.0)
     parser.add_argument("--cfg-vae",  type=bool, default=False)
+    parser.add_argument("--rg-scale",  type=float, default=1.0)
     parser.add_argument("--ref-batch", type=str, default="./VIRTUAL_imagenet256_labeled.npz")
     parser.add_argument("--num-sampling-steps", type=int, default=250)
     parser.add_argument("--global-seed", type=int, default=0)
