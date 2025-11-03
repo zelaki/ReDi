@@ -97,6 +97,9 @@ You can use sample_ddp.py script to sample a large number of images in parallel.
 torchrun --nnodes=1 --nproc_per_node=N  sample_ddp.py SDE --model SiT-XL/2 --num-fid-samples 50000  --pca-rank 8 --ckpt pretrained_models/SiT-ReDi-XL-2.pt --cfg-scale 2.4 --cfg-vae True --ref-batch VIRTUAL_imagenet256_labeled.npz
 ```
 
+#### Represenation Guidance
+- `--rg-scale`: Set >1.0 to use Representation Guidance during sampling. **Note:** Will work only for models trained with `--dino-drop-prob` > 0.
+
 
 ## Data Preprocessing
 
